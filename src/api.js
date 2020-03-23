@@ -48,11 +48,17 @@ const schemaDefinition = {
       pos: 'bottom',
       idList: '{{trello_selected_list}}',
       name: '{{trello_card_name}}',
+      desc: '{{trello_card_desc}}',
+      idMembers: ['{{trello_selected_member}}'],
     },
     fields: [
       {
         display: 'Name the newly created card',
         slug: 'trello_card_name',
+      },
+      {
+        display: 'Describe the newly created card',
+        slug: 'trello_card_desc',
       },
       {
         display: 'What list would you like to add the card to?',
@@ -88,12 +94,27 @@ const schema = Object.entries(schemaDefinition).reduce(
  * Better: use mustache or any other template language
  */
 function fillTemplate(state, template) {
+  if (template instanceof Array) {
+    return template.map(v => fillTemplate(state, v));
+  }
+  if ({}.constructor === template.constructor) {
+    return Object.entries(template).reduce((p, [k, v]) => ({
+      ...p,
+      [k]: fillTemplate(state, v),
+    }));
+  }
   return template.replace(
     /{{([a-z_-]+)}}/g,
     (_, name) => state[name].submitValue || state[name],
   );
 }
 
+/**
+ *
+ * Given a full state and a payload definition,
+ * this function will replace every variable in the payload,
+ * with the values stored in the state
+ */
 function stateToPayload(state, payloadDefinition) {
   return Object.entries(payloadDefinition).reduce((p, [k, v]) => {
     return { ...p, [k]: fillTemplate(state, v) };

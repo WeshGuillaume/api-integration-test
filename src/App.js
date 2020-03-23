@@ -1,92 +1,18 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
 import trello from './api';
 import './App.css';
-
-const text = css`
-  font-family: sans-serif;
-  font-weight: lighter;
-  font-size: 16px;
-  color: #424242;
-`;
-
-const Container = styled.div`
-  margin: 64px;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  width: 600px;
-  border: 1px solid #f0f0f0;
-  border-radius: 8px;
-  box-shadow: 0 1px 22px -12px rgba(0, 0, 0, 0.5);
-  z-index: 0;
-`;
-
-const Label = styled.label`
-  margin-top: 40px;
-  margin-bottom: 16px;
-  ${text}
-`;
-
-const InputContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-`;
-
-const InputElement = styled.input`
-  flex: 1;
-  padding: 8px;
-  font-size: 16px;
-  background: #fcfcfc;
-  border-radius: 8px;
-  border: 1px solid #f0f0f0;
-  outline: none;
-  ${text};
-  font-weight: bolder;
-`;
-
-const AutocompleteContainer = styled.div`
-  position: absolute;
-  box-shadow: 0 1px 22px -12px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-  border: 1px solid #f0f0f0;
-  background-color: white;
-  z-index: 1;
-  width: 632px;
-  margin-left: -48px;
-  top: 40px;
-`;
-
-const Error = styled.p`
-  ${text};
-  font-size: 12px;
-  color: red;
-  margin-top: 16px;
-`;
-
-const AutocompleteElement = styled.p`
-  cursor: pointer;
-  padding: 16px 32px;
-  &:hover {
-    background-color: #eeeeff;
-  }
-`;
-
-const Button = styled.a`
-  padding: 16px;
-  margin: 32px 0;
-  border-radius: 8px;
-  background-color: #424242;
-  text-decoration: none;
-  ${text};
-  color: white;
-  font-weight: bolder;
-  text-align: center;
-  cursor: pointer;
-`;
+import {
+  Container,
+  InputContainer,
+  InputElement,
+  AutocompleteContainer,
+  AutocompleteElement,
+  Label,
+  Error,
+  Title,
+  ButtonText,
+  Button,
+} from './style';
 
 function Input({ value, onChange, field, state, setState, label }) {
   const [focus, setFocus] = useState(false);
@@ -137,9 +63,10 @@ function Input({ value, onChange, field, state, setState, label }) {
                     target: {
                       value: {
                         ...e,
-                        submitValue: field.autocompleteSubmit
-                          ? e[field.autocompleteSubmit]
-                          : e,
+                        submitValue:
+                          console.log(field) || field.autocompleteSubmit
+                            ? e[field.autocompleteSubmit]
+                            : e,
                       },
                     },
                   })
@@ -183,6 +110,7 @@ function App() {
 
   return (
     <Container>
+      <Title>{trello.schema.createCard.display}</Title>
       {trello.getFields('createCard').map((field, index) => (
         <Fragment key={index}>
           <Input
@@ -195,13 +123,16 @@ function App() {
             }
             state={state}
             setState={setState}
-            onChange={e => setState({ ...state, [field.slug]: e.target.value })}
+            onChange={e =>
+              console.log({ e }) ||
+              setState({ ...state, [field.slug]: e.target.value })
+            }
             field={field}
           />
         </Fragment>
       ))}
-      <Button onClick={() => console.log('ok') || trello.createCard(state)}>
-        {trello.schema.createCard.display}
+      <Button onClick={() => (trello.createCard(state), setState({}))}>
+        <ButtonText>{trello.schema.createCard.display}</ButtonText>
       </Button>
     </Container>
   );
