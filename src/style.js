@@ -4,7 +4,7 @@ export const Container = styled.div`
   background: #eff0f1;
   box-shadow: -5px -5px 12px 0 rgba(255, 255, 255, 0.5), 5px 5px 12px 0 #e3e7ec;
   margin: 32px;
-  padding: 32px;
+  padding: 32px 64px;
   padding-bottom: 64px;
   display: flex;
   flex-direction: column;
@@ -61,8 +61,8 @@ export const AutocompleteContainer = styled.div`
   position: absolute;
   border-radius: 20px;
   z-index: 1;
-  width: 632px;
-  margin-left: -48px;
+  width: 664px;
+  margin-left: -90px;
   top: 40px;
   background-color: #eff0f1;
   box-shadow: 18px 18px 20px 0 #e3e7ec;
