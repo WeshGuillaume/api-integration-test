@@ -75,6 +75,19 @@ const AutocompleteElement = styled.p`
   }
 `;
 
+const Button = styled.a`
+  padding: 16px;
+  margin: 32px 0;
+  border-radius: 8px;
+  background-color: #424242;
+  text-decoration: none;
+  ${text};
+  color: white;
+  font-weight: bolder;
+  text-align: center;
+  cursor: pointer;
+`;
+
 function Input({ value, onChange, field, state, setState, label }) {
   const [focus, setFocus] = useState(false);
   const [error, setError] = useState(null);
@@ -100,14 +113,7 @@ function Input({ value, onChange, field, state, setState, label }) {
         setError(null);
       }
     })();
-  }, [
-    field.autocompleteAction,
-    focus,
-    setState,
-    state,
-    autocomplete,
-    field.autocompleteError,
-  ]);
+  }, [field, focus, setState, state, autocomplete]);
 
   return (
     <>
@@ -177,7 +183,7 @@ function App() {
 
   return (
     <Container>
-      {trello.schema.createCard.fields.map((field, index) => (
+      {trello.getFields('createCard').map((field, index) => (
         <Fragment key={index}>
           <Input
             label={field.display}
@@ -194,6 +200,9 @@ function App() {
           />
         </Fragment>
       ))}
+      <Button onClick={() => console.log('ok') || trello.createCard(state)}>
+        {trello.schema.createCard.display}
+      </Button>
     </Container>
   );
 }
