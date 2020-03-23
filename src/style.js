@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   background: #eff0f1;
   box-shadow: -5px -5px 12px 0 rgba(255, 255, 255, 0.5), 5px 5px 12px 0 #e3e7ec;
-  margin: 64px;
+  margin: 32px;
   padding: 32px;
   padding-bottom: 64px;
   display: flex;
@@ -17,7 +17,7 @@ export const Container = styled.div`
 export const Title = styled.h2`
   font-family: Muli;
   font-weight: 900;
-  font-size: 53px;
+  font-size: 48px;
   max-width: 400px;
   background-color: #a6bbd0;
   color: transparent;
@@ -45,7 +45,7 @@ export const InputContainer = styled.div`
 
 export const InputElement = styled.input`
   flex: 1;
-  padding: 16px;
+  padding: 14px 16px;
   font-size: 16px;
   border-radius: 25px;
   outline: none;
@@ -121,7 +121,7 @@ export const Button = styled.a`
 
 export const ButtonText = styled.span`
   font-family: Muli;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 900;
   text-align: center;
   background-color: #81bcc0;
